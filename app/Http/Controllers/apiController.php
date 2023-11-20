@@ -24,8 +24,13 @@ class apiController extends Controller
         $record->passwprd = $req->passwprd;
         $record->email = $req->email;
         $data = $record->save();
-        if($data)
+        if($record->save())
         {
+            return jsonResponse([
+                'status' => true,
+                'message' =>"success",
+                'data' => $data
+            ]);
             echo "record is added to list:";
         }
         else{
