@@ -6,9 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\record;
 use Validator;
+use App\Repositories\UserRepository;
 
 class apiController extends Controller
 {
+    private $UserRepository;
+    public function __construct(UserRepository $UserRepository)
+    {
+        $this->UserRepository = $UserRepository;
+    }
+    public function get()
+    {
+         return $this->UserRepository->show();
+    }
     //
     function getData($id=null)
     {
@@ -24,7 +34,7 @@ class apiController extends Controller
         $record->passwprd = $req->passwprd;
         $record->email = $req->email;
         $data = $record->save();
-        if($record->save())
+        if($data->save())
         {
             return jsonResponse([
                 'status' => true,
